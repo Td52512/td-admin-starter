@@ -30,7 +30,7 @@
             />
           </el-form-item>
           <div class="rememberMe">
-            <el-checkbox v-model="rememberMe">记住我</el-checkbox>
+            <el-checkbox v-model="loginForm.rememberMe">记住我</el-checkbox>
           </div>
           <el-form-item style="width: 100%">
             <el-button
@@ -52,7 +52,7 @@
 <script>
 import Cookies from "js-cookie";
 import { encrypt, decrypt } from "@/utils/jsencrypt";
-import { login } from "@/api/login";
+import { login } from "@/api/user/index.js";
 import { setToken } from "@/utils/auth";
 export default {
   name: "Login",
@@ -76,8 +76,8 @@ export default {
         }
       };
       const validatePassword = (rule, value, callback) => {
-        if (value.length < 6) {
-          callback(new Error("密码必须在6位以上"));
+        if (value.length < 5) {
+          callback(new Error("密码必须在5位以上"));
         } else {
           callback();
         }
@@ -108,15 +108,18 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
           this.loading = true;
-          // this.$router.push("/index");
           let res = await login(this.loginForm);
           if (String(res.code) == "200") {
-            // Cookies.set("username", this.loginForm.username, { expires: 30 });
-            // Cookies.set("password", encrypt(this.loginForm.password), {
-            //   expires: 30,
-            // });
-            setToken(res.data.token);
+            Cookies.set("username", this.loginForm.username, { expires: 30 });
+            Cookies.set("password", encrypt(this.loginForm.password), {
+              expires: 30,
+            });
+            Cookies.set("rememberMe", this.loginForm.rememberMe, {
+              expires: 30,
+            });
+            setToken(res.data);
             //跳转到主页
+            this.$router.push("/index");
           } else {
             this.$message.error(res.msg);
             this.loading = false;

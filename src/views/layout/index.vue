@@ -1,7 +1,42 @@
-<template></template>
+<template>
+  <div class="app">
+    <Sidebar></Sidebar>
+    <div class="right">
+      <Header></Header>
+      <Content></Content>
+    </div>
+  </div>
+</template>
 
 <script>
-export default {};
+import Sidebar from "@/components/sidebar.vue";
+import Header from "@/components/header.vue";
+import Content from "@/components/content.vue";
+export default {
+  name: "App",
+  data() {
+    return {};
+  },
+
+  components: {
+    Sidebar,
+    Header,
+    Content,
+  },
+};
 </script>
 
-<style></style>
+<style lang="less">
+* {
+  margin: 0;
+  padding: 0;
+}
+.app {
+  height: 100%;
+  display: flex;
+}
+
+.right {
+  width: calc(100vw - 190px);
+}
+</style>
