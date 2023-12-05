@@ -108,20 +108,32 @@ export default {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
           this.loading = true;
+
           let res = await login(this.loginForm);
           if (String(res.code) == "200") {
-            Cookies.set("username", this.loginForm.username, { expires: 30 });
-            Cookies.set("password", encrypt(this.loginForm.password), {
-              expires: 30,
-            });
-            Cookies.set("rememberMe", this.loginForm.rememberMe, {
-              expires: 30,
-            });
+            if (this.loginForm.rememberMe) {
+              Cookies.set("username", this.loginForm.username, { expires: 30 });
+              Cookies.set("password", encrypt(this.loginForm.password), {
+                expires: 30,
+              });
+              Cookies.set("rememberMe", this.loginForm.rememberMe, {
+                expires: 30,
+              });
+            } else {
+              Cookies.remove("username");
+              Cookies.remove("password");
+              Cookies.remove("rememberMe");
+            }
+
             setToken(res.data);
             //跳转到主页
             this.$router.push("/index");
+            //提示
+            this.$message({
+              type: "success",
+              message: "登录成功!",
+            });
           } else {
-            this.$message.error(res.msg);
             this.loading = false;
           }
         }

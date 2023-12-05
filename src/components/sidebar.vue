@@ -4,36 +4,38 @@
       <!-- <img src="@/assets/logo.png" alt="" /> -->
       <!-- 管理后台 -->
     </div>
-    <el-row class="tac">
-      <el-col>
-        <el-menu
-          default-active="/index"
-          class="el-menu-vertical-demo"
-          background-color="#343744"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-          router
-        >
-          <el-menu-item index="/index">
-            <i class="el-icon-document"></i>
-            <span slot="title">首页</span>
-          </el-menu-item>
-          <el-submenu index="" v-for="item in menus" :key="item.id">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>{{ item.menuName }}</span>
-            </template>
+    <el-menu
+      default-active="/index"
+      class="el-menu-vertical-demo"
+      background-color="#343744"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      router
+    >
+      <el-menu-item index="/index" style="width: 190px">
+        <i class="el-icon-document"></i>
+        <span slot="title">首页</span>
+      </el-menu-item>
+      <el-submenu
+        style="width: 190px"
+        index=""
+        v-for="item in menus"
+        :key="item.id"
+      >
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>{{ item.menuName }}</span>
+        </template>
 
-            <el-menu-item
-              :index="i.path"
-              v-for="i in item.children"
-              :key="i.id"
-              >{{ i.menuName }}</el-menu-item
-            >
-          </el-submenu>
-        </el-menu>
-      </el-col>
-    </el-row>
+        <el-menu-item
+          style="width: 190px"
+          :index="i.path"
+          v-for="i in item.children"
+          :key="i.id"
+          >{{ i.menuName }}</el-menu-item
+        >
+      </el-submenu>
+    </el-menu>
   </div>
 </template>
 
@@ -55,8 +57,10 @@ export default {
 <style lang="less" scoped>
 .box {
   width: 190px;
-  height: 100vh;
+  min-height: 100vh;
+  max-height: 100%;
   background-color: #343744;
+  overflow: hidden;
 }
 
 .el-submenu .el-menu-item {

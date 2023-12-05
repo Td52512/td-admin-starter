@@ -6,6 +6,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import {getToken} from '@/utils/auth.js'
 import { login } from './api/user';
+//导入css
+import '@/assets/css/common.css'
 
 Vue.config.productionTip = false
 
@@ -39,12 +41,12 @@ router.beforeEach(async (to,form,next) => {
     return
   }
 
-  if (token && to.path === "/login") {
-    next({
-      path: "/index",
-    });
-    return
-  }
+  // if (token && to.path === "/login") {
+  //   next({
+  //     path: "/index",
+  //   });
+  //   return
+  // }
 
   if(token != undefined && !store.state.auth){
     await store.dispatch("setUserRouters")

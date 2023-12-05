@@ -10,9 +10,10 @@ export default {};
 <style lang="less" scoped>
 .box {
   width: 100%;
-  height: calc(100vh - 60px);
+  // height: calc(100vh - 60px);
   background-color: #f3f4f7;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 </style>
